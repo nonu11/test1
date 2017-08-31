@@ -1,68 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title><![CDATA[爬虫从入门到放弃]]></title>
-      <url>/2017/03/05/2017-03-05-%E7%88%AC%E8%99%AB%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/</url>
-      <content type="html"><![CDATA[<p>#已放弃#</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 爬虫 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[我的博客]]></title>
-      <url>/2016/10/15/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
-      <content type="html"><![CDATA[<blockquote>
-<p>我的博客第一天<br> .今天开始，我将记录生活。</p>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 其他 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> blog </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>/2016/09/03/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-      
-        
-    </entry>
-    
-  
-  
+<search>
+  <entry>
+    <title><![CDATA[图片与字符的故事]]></title>
+    <url>%2F2017%2F08%2F31%2F%E5%9B%BE%E7%89%87%E4%B8%8E%E5%AD%97%E7%AC%A6%E7%9A%84%E6%95%85%E4%BA%8B%2F</url>
+    <content type="text"><![CDATA[#一、介绍今天我们来聊聊图片与字符画的故事。 这是一个有趣的Python小项目，可以将一张图片转化成由无数的字符组成的图像。 接下来看看如何实现它。 #二、原理 字符画是一系列字符的组合，我们可以把字符看作是比较大块的像素，一个字符能表现一种颜色，字符的种类越多，可以表现的颜色也越多，图片也会更有层次感。要实现图片到字符的转换，就要将图片每个像素的RGB值转换成不同的灰度值，然后让每个灰度值对应一个字符，从而实现图片到字符画的转换。 灰度值：指黑白图像中点的颜色深度，范围一般从0到255，白色为255，黑色为0，故黑白图片也称灰度图像 RGB值到灰度值的转换公式： gray ＝ 0.2126 * r + 0.7152 * g + 0.0722 * b #三、程序 安装依赖库 PIL 是一个 Python 图像处理库，是此程序要使用的重要工具，安装 pillow（PIL）库。 pip install pillow 导入库要是用库，就需要先将库导入到程序中来。 from PIL import Image import argparse RGB值转字符函数： def get_char(r,g,b,alpha = 256): if alpha == 0: return &apos; &apos; length = len(ascii_char) gray = int(0.2126 r + 0.7152 g + 0.0722 * b) unit = (256.0 + 1)/length return ascii_char[int(gray/unit)] #四、最终效果 原图是这样： 效果图如下：]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[爬虫从入门到放弃]]></title>
+    <url>%2F2017%2F03%2F05%2F2017-03-05-%E7%88%AC%E8%99%AB%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%2F</url>
+    <content type="text"><![CDATA[#已放弃#]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[我的博客]]></title>
+    <url>%2F2016%2F10%2F15%2F%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[我的博客第一天 .今天开始，我将记录生活。]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2016%2F09%2F03%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
 </search>
