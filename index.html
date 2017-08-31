@@ -379,20 +379,60 @@
 <p>PIL 是一个 Python 图像处理库，是此程序要使用的重要工具，安装 pillow（PIL）库。</p>
 <pre><code>pip install pillow
 </code></pre><ul>
-<li><p>导入库<br>要是用库，就需要先将库导入到程序中来。</p>
-<p>  from PIL import Image</p>
-<p>  import argparse</p>
+<li><p>导入库<br>要是用库，就需要先将库导入到程序中来。<br>  <code>from PIL import Image  
+  import argparse</code></p>
 </li>
 <li><p>RGB值转字符函数：</p>
-<p>  def get_char(r,g,b,alpha = 256):<br>  if alpha == 0:</p>
-<pre><code>return &apos; &apos;
-</code></pre><p>  length = len(ascii_char)<br>  gray = int(0.2126 <em> r + 0.7152 </em> g + 0.0722 * b)</p>
-<p>  unit = (256.0 + 1)/length<br>  return ascii_char[int(gray/unit)]</p>
 </li>
 </ul>
+<blockquote>
+<pre><code>def get_char(r,g,b,alpha = 256):
+if alpha == 0:
+    return &apos; &apos;
+length = len(ascii_char)
+gray = int(0.2126 * r + 0.7152 * g + 0.0722 * b)
+</code></pre></blockquote>
+<pre><code>unit = (256.0 + 1)/length
+return ascii_char[int(gray/unit)]
+</code></pre><ul>
+<li>完整代码</li>
+</ul>
+<blockquote>
+<p>from PIL import Image<br>import argparse</p>
+<p>parser = argparse.ArgumentParser()<br>parser.add_argument(‘file’)<br>parser.add_argument(‘-o’, ‘–output’)<br>parser.add_argument(‘–width’, type = int, default = 80) #输出字符画宽<br>parser.add_argument(‘–height’, type = int, default = 80) #输出字符画高</p>
+<p>args = parser.parse_args()</p>
+<p>IMG = args.file<br>WIDTH = args.width<br>HEIGHT = args.height<br>OUTPUT = args.output</p>
+<p>ascii<em>char = list(“$@B%8&amp;WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-</em>+~&lt;&gt;i!lI;:,\”^`’. “)</p>
+<p>def get_char(r,g,b,alpha = 256):<br>    if alpha == 0:<br>        return ‘ ‘<br>    length = len(ascii_char)<br>    gray = int(0.2126 <em> r + 0.7152 </em> g + 0.0722 * b)</p>
+</blockquote>
+<pre><code>unit = (256.0 + 1)/length
+return ascii_char[int(gray/unit)]
+</code></pre><blockquote>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:</p>
+</blockquote>
+<pre><code>im = Image.open(IMG)
+im = im.resize((WIDTH,HEIGHT), Image.NEAREST)
+
+txt = &quot;&quot;
+
+for i in range(HEIGHT):
+    for j in range(WIDTH):
+        txt += get_char(*im.getpixel((j,i)))
+    txt += &apos;\n&apos;
+
+print txt
+
+#字符画输出到文件
+if OUTPUT:
+    with open(OUTPUT,&apos;w&apos;) as f:
+        f.write(txt)
+else:
+    with open(&quot;output.txt&quot;,&apos;w&apos;) as f:
+        f.write(txt)
+</code></pre><p>代码下载地址：<a href="https://github.com/zhangmuran/photos.git" target="_blank" rel="external">https://github.com/zhangmuran/photos.git</a></p>
 <p>#四、最终效果</p>
 <p>原图是这样：<br><img src="http://i.imgur.com/55JJpy0.jpg" alt=""></p>
-<p>效果图如下：<br><img src="http://i.imgur.com/K7YuQsH.png" alt=""></p>
+<p>效果图如下：<br><img src="http://i.imgur.com/LPrifm5.png" alt=""></p>
 
           
         
