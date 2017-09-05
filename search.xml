@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Python爬虫爬取招聘信息]]></title>
+    <url>%2F2017%2F09%2F05%2FPython%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96%E6%8B%9B%E8%81%98%E4%BF%A1%E6%81%AF%2F</url>
+    <content type="text"><![CDATA[毕业在即，需要随时关注招聘信息，所以做了个Python爬虫，来爬取招聘信息。 下面简单介绍一下如何实现。 ###导入模块此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。 import reimport urllib.requestfrom bs4 import BeautifulSoup ###获取网页用urllib来获取网页内容，需要注意的是,获取到的网页要转回原来的编码，不然中方不能正常显示。 def get_page(url): if url.find(‘jiuye.lut.cn’) == -1:#返回值为-1则不含有该字段 coding = ‘utf-8’ else: coding = ‘gbk’ result = urllib.request.urlopen(url) html = str(result.read(),coding) result.close() soup = BeautifulSoup(‘’.join(html),”html.parser”) return soup.prettify() ###筛选信息用re模块来筛选出需要的信息，保存或输出信息。 def save_lut(html): msg = {} reg = r’(.?)‘ list = re.findall(reg,html,re.S|re.M) for i in list: re_t = r’\n(.?)‘ re_h = r’‘ msglist = re.findall(re_t,i,re.S|re.M) hreflist = re.findall(re_h,i,re.S|re.M) msg.setdefault(‘时间’,[]).append(msglist[0]) msg.setdefault(‘单位’,[]).append(msglist[1]) msg.setdefault(‘地点’,[]).append(msglist[2]) msg.setdefault(‘简介’,[]).append(“http://jiuye.lut.cn/www/“+hreflist[0]) for i in range(0,len(msg[“时间”])): for j in msg: print(j+’：’+msg[j][i]) print(‘——————————————————‘) ###输入网址并运行当该程序独自运行时执行以下代码，常用于测试。 if name == “main“: url_lut = [“http://jiuye.lut.cn/www/ContentsMain.asp?Page=1&amp;MainType=0&amp;Keywords=&amp;ClassId=27”,”http://jiuye.lut.cn/www/ContentsMain.asp?Page=2&amp;MainType=0&amp;Keywords=&amp;ClassId=27”] for i in url_lut: html = get_page(url_jtu) save_jtu(html) 源码地址：https://github.com/zhangmuran/Python/blob/master/find_job.py]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>Python 爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[简单端口扫描工具]]></title>
     <url>%2F2017%2F09%2F03%2F%E7%AE%80%E5%8D%95%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7%2F</url>
     <content type="text"><![CDATA[这是一个简单的端口扫描工具，可以实现一般的端口扫描功能。 由Python编写，所以效率略低@_@ 源代码： ‘’’# ！bin/usr/python/bin’’’‘’’# _coding_:utf-8’’’ import socketimport threadingimport time socket.setdefaulttimeout(3)mlock = threading.RLock() def socket_port(ip, port): try: if port &gt;= 65535: print(u”端口扫描结束 0-65535”) s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) result = s.connect_ex((ip, port)) if (result == 0): mlock.acquire() #加锁 print(ip, u”:”, port, u”端口开放”) mlock.release() #释放锁 s.close() except: print(u”异常2”) def ip_port(data): try: t = time.time() for i in range(80, 65535): threading.Thread(target=socket_port(data, int(i))).start() print(u”扫描端口完成用时 time:%f” % (time.time() - t)) except: print(u”异常1”) if name == ‘main‘: ip_port(“127.0.0.1”) 代码下载地址：https://github.com/zhangmuran/Scan_port]]></content>
