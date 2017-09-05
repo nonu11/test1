@@ -9,13 +9,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/Python/</loc>
-        <lastmod>2017-09-03T15:22:56.023Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/port/</loc>
         <lastmod>2017-09-03T15:22:56.023Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -23,8 +16,15 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/Python-%E7%88%AC%E8%99%AB/</loc>
-        <lastmod>2017-09-05T10:59:46.117Z</lastmod>
+        <loc>http://yoursite.com/tags/Python/</loc>
+        <lastmod>2017-09-05T11:02:12.823Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/%E7%88%AC%E8%99%AB/</loc>
+        <lastmod>2017-09-05T11:02:12.823Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
