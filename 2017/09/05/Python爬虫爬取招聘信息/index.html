@@ -86,26 +86,26 @@
 
 <meta name="description" content="毕业在即，需要随时关注招聘信息，所以做了个Python爬虫，来爬取招聘信息。
 下面简单介绍一下如何实现。
-###导入模块此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。
+###导入模块###此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。
 
-import reimport urllib.requestfrom bs4 import Beautifu">
+import reimport urllib.requestfrom bs4 import Beaut">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python爬虫爬取招聘信息">
 <meta property="og:url" content="http://yoursite.com/2017/09/05/Python爬虫爬取招聘信息/index.html">
 <meta property="og:site_name" content="Mrdy-木然的丫">
 <meta property="og:description" content="毕业在即，需要随时关注招聘信息，所以做了个Python爬虫，来爬取招聘信息。
 下面简单介绍一下如何实现。
-###导入模块此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。
+###导入模块###此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。
 
-import reimport urllib.requestfrom bs4 import Beautifu">
-<meta property="og:updated_time" content="2017-09-05T10:54:37.476Z">
+import reimport urllib.requestfrom bs4 import Beaut">
+<meta property="og:updated_time" content="2017-09-05T10:59:46.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python爬虫爬取招聘信息">
 <meta name="twitter:description" content="毕业在即，需要随时关注招聘信息，所以做了个Python爬虫，来爬取招聘信息。
 下面简单介绍一下如何实现。
-###导入模块此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。
+###导入模块###此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。
 
-import reimport urllib.requestfrom bs4 import Beautifu">
+import reimport urllib.requestfrom bs4 import Beaut">
 
 
 
@@ -370,19 +370,19 @@ import reimport urllib.requestfrom bs4 import Beautifu">
       
         <p>毕业在即，需要随时关注招聘信息，所以做了个Python爬虫，来爬取招聘信息。</p>
 <p>下面简单介绍一下如何实现。</p>
-<p>###导入模块<br>此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。</p>
+<p>###导入模块###<br>此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。</p>
 <blockquote>
 <p>import re<br>import urllib.request<br>from bs4 import BeautifulSoup</p>
 </blockquote>
-<p>###获取网页<br>用urllib来获取网页内容，需要注意的是,获取到的网页要转回原来的编码，不然中方不能正常显示。</p>
+<p>###获取网页###<br>用urllib来获取网页内容，需要注意的是,获取到的网页要转回原来的编码，不然中方不能正常显示。</p>
 <blockquote>
 <p>def get_page(url):<br>    if url.find(‘jiuye.lut.cn’) == -1:#返回值为-1则不含有该字段<br>        coding = ‘utf-8’<br>    else:<br>        coding = ‘gbk’<br>    result = urllib.request.urlopen(url)<br>    html = str(result.read(),coding)<br>    result.close()<br>    soup = BeautifulSoup(‘’.join(html),”html.parser”)<br>    return soup.prettify()</p>
 </blockquote>
-<p>###筛选信息<br>用re模块来筛选出需要的信息，保存或输出信息。</p>
+<p>###筛选信息###<br>用re模块来筛选出需要的信息，保存或输出信息。</p>
 <blockquote>
 <p>def save_lut(html):<br>    msg = {}<br>    reg = r’<td style="line-height:24px;">(.<em>?)</em></td>‘<br>    list = re.findall(reg,html,re.S|re.M)<br>    for i in list:<br>        re_t = r’<span class="blue">\n(.?)</span>‘<br>        re_h = r’<a href="(.*?)" target="_blank">‘<br>        msglist = re.findall(re_t,i,re.S|re.M)<br>        hreflist = re.findall(re_h,i,re.S|re.M)<br>        msg.setdefault(‘时间’,[]).append(msglist[0])<br>        msg.setdefault(‘单位’,[]).append(msglist[1])<br>        msg.setdefault(‘地点’,[]).append(msglist[2])<br>        msg.setdefault(‘简介’,[]).append(“http://jiuye.lut.cn/www/“+hreflist[0])<br>    for i in range(0,len(msg[“时间”])):<br>        for j in msg:<br>            print(j+’：’+msg[j][i])<br>        print(‘——————————————————‘)</a></p>
 </blockquote>
-<p>###输入网址并运行<br>当该程序独自运行时执行以下代码，常用于测试。</p>
+<p>###输入网址并运行###<br>当该程序独自运行时执行以下代码，常用于测试。</p>
 <blockquote>
 <p>if <strong>name</strong> == “<strong>main</strong>“:<br>    url_lut = [“http://jiuye.lut.cn/www/ContentsMain.asp?Page=1&amp;MainType=0&amp;Keywords=&amp;ClassId=27”,”http://jiuye.lut.cn/www/ContentsMain.asp?Page=2&amp;MainType=0&amp;Keywords=&amp;ClassId=27”]<br>    for i in url_lut:<br>        html = get_page(url_jtu)<br>        save_jtu(html)</p>
 </blockquote>
