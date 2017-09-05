@@ -1,234 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title><![CDATA[Python爬虫爬取招聘信息]]></title>
-      <url>/2017/09/05/Python%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96%E6%8B%9B%E8%81%98%E4%BF%A1%E6%81%AF/</url>
-      <content type="html"><![CDATA[<p>毕业在即，需要随时关注招聘信息，所以做了个Python爬虫，来爬取招聘信息。</p>
-<p>下面简单介绍一下如何实现。</p>
-<p>###导入模块<br>此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。</p>
-<blockquote>
-<p>import re<br>import urllib.request<br>from bs4 import BeautifulSoup</p>
-</blockquote>
-<p>###获取网页<br>用urllib来获取网页内容，需要注意的是,获取到的网页要转回原来的编码，不然中方不能正常显示。</p>
-<blockquote>
-<p>def get_page(url):<br>    if url.find(‘jiuye.lut.cn’) == -1:#返回值为-1则不含有该字段<br>        coding = ‘utf-8’<br>    else:<br>        coding = ‘gbk’<br>    result = urllib.request.urlopen(url)<br>    html = str(result.read(),coding)<br>    result.close()<br>    soup = BeautifulSoup(‘’.join(html),”html.parser”)<br>    return soup.prettify()</p>
-</blockquote>
-<p>###筛选信息<br>用re模块来筛选出需要的信息，保存或输出信息。</p>
-<blockquote>
-<p>def save_lut(html):<br>    msg = {}<br>    reg = r’<td style="line-height:24px;">(.<em>?)</em></td>‘<br>    list = re.findall(reg,html,re.S|re.M)<br>    for i in list:<br>        re_t = r’<span class="blue">\n(.?)</span>‘<br>        re_h = r’<a href="(.*?)" target="_blank">‘<br>        msglist = re.findall(re_t,i,re.S|re.M)<br>        hreflist = re.findall(re_h,i,re.S|re.M)<br>        msg.setdefault(‘时间’,[]).append(msglist[0])<br>        msg.setdefault(‘单位’,[]).append(msglist[1])<br>        msg.setdefault(‘地点’,[]).append(msglist[2])<br>        msg.setdefault(‘简介’,[]).append(“http://jiuye.lut.cn/www/“+hreflist[0])<br>    for i in range(0,len(msg[“时间”])):<br>        for j in msg:<br>            print(j+’：’+msg[j][i])<br>        print(‘——————————————————‘)</a></p>
-</blockquote>
-<p>###输入网址并运行<br>当该程序独自运行时执行以下代码，常用于测试。</p>
-<blockquote>
-<p>if <strong>name</strong> == “<strong>main</strong>“:<br>    url_lut = [“http://jiuye.lut.cn/www/ContentsMain.asp?Page=1&amp;MainType=0&amp;Keywords=&amp;ClassId=27”,”http://jiuye.lut.cn/www/ContentsMain.asp?Page=2&amp;MainType=0&amp;Keywords=&amp;ClassId=27”]<br>    for i in url_lut:<br>        html = get_page(url_jtu)<br>        save_jtu(html)</p>
-</blockquote>
-<p><em>源码地址</em>：https://github.com/zhangmuran/Python/blob/master/find_job.py</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 爬虫 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[简单端口扫描工具]]></title>
-      <url>/2017/09/03/%E7%AE%80%E5%8D%95%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/</url>
-      <content type="html"><![CDATA[<p>这是一个简单的端口扫描工具，可以实现一般的端口扫描功能。</p>
-<p>由Python编写，所以效率略低@_@</p>
-<p>源代码：</p>
-<blockquote>
-<p>‘’’# ！bin/usr/python/bin’’’<br>‘’’# _<em><em>coding</em></em>_:utf-8’’’</p>
-<p>import socket<br>import threading<br>import time</p>
-<p>socket.setdefaulttimeout(3)<br>mlock = threading.RLock()</p>
-<p>def socket_port(ip, port):<br>    try:<br>        if port &gt;= 65535:<br>            print(u”端口扫描结束 0-65535”)<br>        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>        result = s.connect_ex((ip, port))<br>        if (result == 0):<br>            mlock.acquire() #加锁<br>            print(ip, u”:”, port, u”端口开放”)<br>            mlock.release() #释放锁<br>        s.close()<br>    except:<br>        print(u”异常2”)</p>
-<p>def ip_port(data):<br>    try:<br>        t = time.time()<br>        for i in range(80, 65535):<br>            threading.Thread(target=socket_port(data, int(i))).start()<br>        print(u”扫描端口完成用时 time:%f” % (time.time() - t))<br>    except:<br>        print(u”异常1”)</p>
-<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    ip_port(“127.0.0.1”)</p>
-</blockquote>
-<p>代码下载地址：<a href="https://github.com/zhangmuran/Scan_port" target="_blank" rel="external">https://github.com/zhangmuran/Scan_port</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> Python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> port </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[图片与字符的故事]]></title>
-      <url>/2017/08/31/%E5%9B%BE%E7%89%87%E4%B8%8E%E5%AD%97%E7%AC%A6%E7%9A%84%E6%95%85%E4%BA%8B/</url>
-      <content type="html"><![CDATA[<p>#一、介绍<br>今天我们来聊聊图片与字符画的故事。</p>
-<p>这是一个有趣的Python小项目，可以将一张图片转化成由无数的字符组成的图像。</p>
-<p>接下来看看如何实现它。</p>
-<p>#二、原理</p>
-<p>字符画是一系列字符的组合，我们可以把字符看作是比较大块的像素，一个字符能表现一种颜色，字符的种类越多，可以表现的颜色也越多，图片也会更有层次感。<br>要实现图片到字符的转换，就要将图片每个像素的RGB值转换成不同的灰度值，然后让每个灰度值对应一个字符，从而实现图片到字符画的转换。</p>
-<blockquote>
-<p>灰度值：指黑白图像中点的颜色深度，范围一般从0到255，白色为255，黑色为0，故黑白图片也称灰度图像</p>
-</blockquote>
-<p>RGB值到灰度值的转换公式：</p>
-<pre><code>gray ＝ 0.2126 * r + 0.7152 * g + 0.0722 * b
-</code></pre><p>#三、程序</p>
-<ul>
-<li>安装依赖库</li>
-</ul>
-<p>PIL 是一个 Python 图像处理库，是此程序要使用的重要工具，安装 pillow（PIL）库。</p>
-<pre><code>pip install pillow
-</code></pre><ul>
-<li><p>导入库<br>要是用库，就需要先将库导入到程序中来。<br>  <code>from PIL import Image  
-  import argparse</code></p>
-</li>
-<li><p>RGB值转字符函数：</p>
-</li>
-</ul>
-<blockquote>
-<pre><code>def get_char(r,g,b,alpha = 256):
-if alpha == 0:
-    return &apos; &apos;
-length = len(ascii_char)
-gray = int(0.2126 * r + 0.7152 * g + 0.0722 * b)
-</code></pre></blockquote>
-<pre><code>unit = (256.0 + 1)/length
-return ascii_char[int(gray/unit)]
-</code></pre><ul>
-<li>完整代码</li>
-</ul>
-<blockquote>
-<p>from PIL import Image<br>import argparse</p>
-<p>parser = argparse.ArgumentParser()<br>parser.add_argument(‘file’)<br>parser.add_argument(‘-o’, ‘–output’)<br>parser.add_argument(‘–width’, type = int, default = 80) #输出字符画宽<br>parser.add_argument(‘–height’, type = int, default = 80) #输出字符画高</p>
-<p>args = parser.parse_args()</p>
-<p>IMG = args.file<br>WIDTH = args.width<br>HEIGHT = args.height<br>OUTPUT = args.output</p>
-<p>ascii<em>char = list(“$@B%8&amp;WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-</em>+~&lt;&gt;i!lI;:,\”^`’. “)</p>
-<p>def get_char(r,g,b,alpha = 256):<br>    if alpha == 0:<br>        return ‘ ‘<br>    length = len(ascii_char)<br>    gray = int(0.2126 <em> r + 0.7152 </em> g + 0.0722 * b)</p>
-</blockquote>
-<pre><code>unit = (256.0 + 1)/length
-return ascii_char[int(gray/unit)]
-</code></pre><blockquote>
-<p>if <strong>name</strong> == ‘<strong>main</strong>‘:</p>
-</blockquote>
-<pre><code>im = Image.open(IMG)
-im = im.resize((WIDTH,HEIGHT), Image.NEAREST)
-
-txt = &quot;&quot;
-
-for i in range(HEIGHT):
-    for j in range(WIDTH):
-        txt += get_char(*im.getpixel((j,i)))
-    txt += &apos;\n&apos;
-
-print txt
-
-#字符画输出到文件
-if OUTPUT:
-    with open(OUTPUT,&apos;w&apos;) as f:
-        f.write(txt)
-else:
-    with open(&quot;output.txt&quot;,&apos;w&apos;) as f:
-        f.write(txt)
-</code></pre><p>代码下载地址：<a href="https://github.com/zhangmuran/photos.git" target="_blank" rel="external">https://github.com/zhangmuran/photos.git</a></p>
-<p>#四、最终效果</p>
-<p>原图是这样：<br><img src="http://i.imgur.com/55JJpy0.jpg" alt=""></p>
-<p>效果图如下：<br><img src="http://i.imgur.com/LPrifm5.png" alt=""></p>
-]]></content>
-      
-        <categories>
-            
-            <category> Python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[爬虫从入门到放弃]]></title>
-      <url>/2017/03/05/2017-03-05-%E7%88%AC%E8%99%AB%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/</url>
-      <content type="html"><![CDATA[<p>#已放弃#</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 爬虫 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[我的博客]]></title>
-      <url>/2016/10/15/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</url>
-      <content type="html"><![CDATA[<blockquote>
-<p>我的博客第一天<br> .今天开始，我将记录生活。</p>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 其他 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> blog </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>/2016/09/03/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-      
-        
-    </entry>
-    
-  
-  
+<search>
+  <entry>
+    <title><![CDATA[Python爬虫爬取招聘信息]]></title>
+    <url>%2F2017%2F09%2F05%2FPython%E7%88%AC%E8%99%AB%E7%88%AC%E5%8F%96%E6%8B%9B%E8%81%98%E4%BF%A1%E6%81%AF%2F</url>
+    <content type="text"><![CDATA[毕业在即，需要随时关注招聘信息，所以做了个Python爬虫，来爬取招聘信息。 下面简单介绍一下如何实现。 ###导入模块此程序需要三个模块，第一个是urllib,用来打开网页；第二个是Beautifulsoup,用来格式化爬取的网页内容，第三个是re模块，即正则模块，用来筛选需要的信息。 import reimport urllib.requestfrom bs4 import BeautifulSoup ###获取网页用urllib来获取网页内容，需要注意的是,获取到的网页要转回原来的编码，不然中方不能正常显示。 def get_page(url): if url.find(‘jiuye.lut.cn’) == -1:#返回值为-1则不含有该字段 coding = ‘utf-8’ else: coding = ‘gbk’ result = urllib.request.urlopen(url) html = str(result.read(),coding) result.close() soup = BeautifulSoup(‘’.join(html),”html.parser”) return soup.prettify() ###筛选信息用re模块来筛选出需要的信息，保存或输出信息。 def save_lut(html): msg = {} reg = r’(.?)‘ list = re.findall(reg,html,re.S|re.M) for i in list: re_t = r’\n(.?)‘ re_h = r’‘ msglist = re.findall(re_t,i,re.S|re.M) hreflist = re.findall(re_h,i,re.S|re.M) msg.setdefault(‘时间’,[]).append(msglist[0]) msg.setdefault(‘单位’,[]).append(msglist[1]) msg.setdefault(‘地点’,[]).append(msglist[2]) msg.setdefault(‘简介’,[]).append(“http://jiuye.lut.cn/www/“+hreflist[0]) for i in range(0,len(msg[“时间”])): for j in msg: print(j+’：’+msg[j][i]) print(‘——————————————————‘) ###输入网址并运行当该程序独自运行时执行以下代码，常用于测试。 if name == “main“: url_lut = [“http://jiuye.lut.cn/www/ContentsMain.asp?Page=1&amp;MainType=0&amp;Keywords=&amp;ClassId=27”,”http://jiuye.lut.cn/www/ContentsMain.asp?Page=2&amp;MainType=0&amp;Keywords=&amp;ClassId=27”] for i in url_lut: html = get_page(i) save_lut(html) 源码地址：https://github.com/zhangmuran/Python/blob/master/find_job.py]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[简单端口扫描工具]]></title>
+    <url>%2F2017%2F09%2F03%2F%E7%AE%80%E5%8D%95%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7%2F</url>
+    <content type="text"><![CDATA[这是一个简单的端口扫描工具，可以实现一般的端口扫描功能。 由Python编写，所以效率略低@_@ 源代码： ‘’’# ！bin/usr/python/bin’’’‘’’# _coding_:utf-8’’’ import socketimport threadingimport time socket.setdefaulttimeout(3)mlock = threading.RLock() def socket_port(ip, port): try: if port &gt;= 65535: print(u”端口扫描结束 0-65535”) s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) result = s.connect_ex((ip, port)) if (result == 0): mlock.acquire() #加锁 print(ip, u”:”, port, u”端口开放”) mlock.release() #释放锁 s.close() except: print(u”异常2”) def ip_port(data): try: t = time.time() for i in range(80, 65535): threading.Thread(target=socket_port(data, int(i))).start() print(u”扫描端口完成用时 time:%f” % (time.time() - t)) except: print(u”异常1”) if name == ‘main‘: ip_port(“127.0.0.1”) 代码下载地址：https://github.com/zhangmuran/Scan_port]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>port</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[图片与字符的故事]]></title>
+    <url>%2F2017%2F08%2F31%2F%E5%9B%BE%E7%89%87%E4%B8%8E%E5%AD%97%E7%AC%A6%E7%9A%84%E6%95%85%E4%BA%8B%2F</url>
+    <content type="text"><![CDATA[#一、介绍今天我们来聊聊图片与字符画的故事。 这是一个有趣的Python小项目，可以将一张图片转化成由无数的字符组成的图像。 接下来看看如何实现它。 #二、原理 字符画是一系列字符的组合，我们可以把字符看作是比较大块的像素，一个字符能表现一种颜色，字符的种类越多，可以表现的颜色也越多，图片也会更有层次感。要实现图片到字符的转换，就要将图片每个像素的RGB值转换成不同的灰度值，然后让每个灰度值对应一个字符，从而实现图片到字符画的转换。 灰度值：指黑白图像中点的颜色深度，范围一般从0到255，白色为255，黑色为0，故黑白图片也称灰度图像 RGB值到灰度值的转换公式： gray ＝ 0.2126 * r + 0.7152 * g + 0.0722 * b #三、程序 安装依赖库 PIL 是一个 Python 图像处理库，是此程序要使用的重要工具，安装 pillow（PIL）库。 pip install pillow 导入库要是用库，就需要先将库导入到程序中来。 from PIL import Image import argparse RGB值转字符函数： def get_char(r,g,b,alpha = 256): if alpha == 0: return &apos; &apos; length = len(ascii_char) gray = int(0.2126 * r + 0.7152 * g + 0.0722 * b) unit = (256.0 + 1)/length return ascii_char[int(gray/unit)] 完整代码 from PIL import Imageimport argparse parser = argparse.ArgumentParser()parser.add_argument(‘file’)parser.add_argument(‘-o’, ‘–output’)parser.add_argument(‘–width’, type = int, default = 80) #输出字符画宽parser.add_argument(‘–height’, type = int, default = 80) #输出字符画高 args = parser.parse_args() IMG = args.fileWIDTH = args.widthHEIGHT = args.heightOUTPUT = args.output asciichar = list(“$@B%8&amp;WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-+~&lt;&gt;i!lI;:,\”^`’. “) def get_char(r,g,b,alpha = 256): if alpha == 0: return ‘ ‘ length = len(ascii_char) gray = int(0.2126 r + 0.7152 g + 0.0722 * b) unit = (256.0 + 1)/length return ascii_char[int(gray/unit)] if name == ‘main‘: im = Image.open(IMG) im = im.resize((WIDTH,HEIGHT), Image.NEAREST) txt = &quot;&quot; for i in range(HEIGHT): for j in range(WIDTH): txt += get_char(*im.getpixel((j,i))) txt += &apos;\n&apos; print txt #字符画输出到文件 if OUTPUT: with open(OUTPUT,&apos;w&apos;) as f: f.write(txt) else: with open(&quot;output.txt&quot;,&apos;w&apos;) as f: f.write(txt) 代码下载地址：https://github.com/zhangmuran/photos.git #四、最终效果 原图是这样： 效果图如下：]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[爬虫从入门到放弃]]></title>
+    <url>%2F2017%2F03%2F05%2F2017-03-05-%E7%88%AC%E8%99%AB%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83%2F</url>
+    <content type="text"><![CDATA[#已放弃#]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[我的博客]]></title>
+    <url>%2F2016%2F10%2F15%2F%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[我的博客第一天 .今天开始，我将记录生活。]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2016%2F09%2F03%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
 </search>

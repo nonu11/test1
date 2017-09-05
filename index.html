@@ -378,7 +378,7 @@
 </blockquote>
 <p>###输入网址并运行<br>当该程序独自运行时执行以下代码，常用于测试。</p>
 <blockquote>
-<p>if <strong>name</strong> == “<strong>main</strong>“:<br>    url_lut = [“http://jiuye.lut.cn/www/ContentsMain.asp?Page=1&amp;MainType=0&amp;Keywords=&amp;ClassId=27”,”http://jiuye.lut.cn/www/ContentsMain.asp?Page=2&amp;MainType=0&amp;Keywords=&amp;ClassId=27”]<br>    for i in url_lut:<br>        html = get_page(url_jtu)<br>        save_jtu(html)</p>
+<p>if <strong>name</strong> == “<strong>main</strong>“:<br>    url_lut = [“http://jiuye.lut.cn/www/ContentsMain.asp?Page=1&amp;MainType=0&amp;Keywords=&amp;ClassId=27”,”http://jiuye.lut.cn/www/ContentsMain.asp?Page=2&amp;MainType=0&amp;Keywords=&amp;ClassId=27”]<br>    for i in url_lut:<br>        html = get_page(i)<br>        save_lut(html)</p>
 </blockquote>
 <p><em>源码地址</em>：https://github.com/zhangmuran/Python/blob/master/find_job.py</p>
 
